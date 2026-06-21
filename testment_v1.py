@@ -4,7 +4,7 @@ import requests
 
 MODEL_NAME = "Qwen/Qwen3-8B"
 VLLM_URL = "http://localhost:8000/v1/completions"
-BATCH_SIZE = 128
+BATCH_SIZE = 64
 MAX_CHARS = 800
 
 def build_prompt(post):
