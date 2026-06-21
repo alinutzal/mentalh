@@ -19,13 +19,6 @@ Topics:
 - gaming: true if related to video games, esports, online games, consoles, streaming games
 - mental_health: true if the post is about mental health or contains clear signs of depression, anxiety, suicidal ideation, or other mental health issues.
 
-Mental health category, choose exactly one:
-- Unclear: not enough information to classify
-- Normal: no clear depression, suicidal ideation, or anxiety
-- Depression: sadness, hopelessness, low mood, loss of interest, emotional numbness
-- Suicidal: wanting to die, self-harm intent, suicide plan, suicide attempt
-- Anxiety: panic, worry, nervousness, fear, stress, overthinking
-
 Return ONLY valid JSON with this exact format:
 {{
   "mental_health": false,
@@ -53,14 +46,10 @@ def parse_response(text):
     decoder = json.JSONDecoder()
     data, _ = decoder.raw_decode(text[start:])
 
-    mh = data.get("mental_health", "Normal")
-    if mh not in {"Normal", "Depression", "Suicidal", "Anxiety"}:
-        mh = "Normal"
-
     return {
         "college": bool(data.get("college", False)),
         "gaming": bool(data.get("gaming", False)),
-        "mental_health": mh,
+        "mental_health": bool(data.get("mental_health", False)),
     }
 
 
@@ -93,7 +82,7 @@ for start in range(0, len(df), BATCH_SIZE):
         except Exception as e:
             print("Parse failed:", repr(choice["text"]), e)
             results.append({
-                "mental_health": "Normal",
+                "mental_health": False,
                 "college": False,
                 "gaming": False
             })
