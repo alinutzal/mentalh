@@ -1,11 +1,12 @@
 import json
 import pandas as pd
 import requests
+#import tdqm
 
 MODEL_NAME = "Qwen/Qwen3-8B"
 VLLM_URL = "http://localhost:8000/v1/completions"
 BATCH_SIZE = 64
-MAX_CHARS = 800
+MAX_CHARS = 1500
 
 def build_prompt(post):
     post = str(post)
@@ -15,9 +16,19 @@ Do not repeat the post. Do not add text.
 Classify this Reddit post.
 
 Topics:
-- college: true if related to school, university, classes, exams, homework, GPA, campus, professors, students
-- gaming: true if related to video games, esports, online games, consoles, streaming games
-- mental_health: true if the post is about mental health or contains clear signs of depression, anxiety, suicidal ideation, or other mental health issues.
+- college: true if related to school, university, classes, exams, homework, GPA, campus, professors, students, college life, college stress, 
+college mental health, college relationships, college social life, college events, college clubs, college sports, college housing, 
+college finances, college applications, college admissions, college scholarships, college majors, college courses, college professors, 
+college students, assignments, dorms, campus, tuition, academic stress, graduation, major, degree, studying.or any other topic related to higher education.
+- gaming: true if related to video games, esports, online games, consoles, streaming games, gaming culture, gaming communities, 
+gaming events, game development, gaming news, gaming trends, gaming industry, gaming hardware, gaming software, gaming accessories, 
+gaming merchandise, gaming lifestyle, gaming humor, gaming memes, gaming challenges, gaming achievements, gaming discussions, gaming reviews, 
+gaming recommendations, gaming tips and tricks, gaming tutorials, gaming guides, gaming walkthroughs, gaming let's plays, gaming live streams, 
+gaming podcasts, gaming forums, Steam, Xbox, PlayStation, Nintendo, Valorant, League of Legends, Fortnite,Minecraft, Roblox, Call of Duty,
+Counter Strike, CS2, Apex, gaming addiction, gaming friends, streaming, Twitch, Discord, ranked matches, MMORPG, RPG, FPS, spending significant time gaming.
+- mental_health: true if the post is about mental health or contains clear signs of depression, anxiety, suicidal ideation, 
+other mental health issuesstress, burnout, loneliness, isolation, depression, anxiety, panic, self-esteem, self-hatred, emotional distress,
+mental illness, therapy, counseling, suicide, self-harm, or significant psychological suffering.
 
 Return ONLY valid JSON with this exact format:
 {{
@@ -92,5 +103,5 @@ for start in range(0, len(df), BATCH_SIZE):
 labels_df = pd.DataFrame(results)
 output = pd.concat([df.reset_index(drop=True), labels_df], axis=1)
 
-output.to_csv("reddit_classified.csv", index=False)
+output.to_csv("results/reddit_classified.csv", index=False)
 print("Saved reddit_classified.csv")

@@ -5,7 +5,7 @@ from sklearn.metrics import (
     confusion_matrix,
 )
 
-df = pd.read_csv("reddit_classified.csv")
+df = pd.read_csv("results/reddit_classified.csv")
 
 y_true = df["status"]
 y_pred = df["mental_health"]
