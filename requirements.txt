@@ -1,0 +1,7 @@
+sentence-transformers 
+umap-learn 
+matplotlib 
+pandas
+numpy
+scikit-learn
+torch

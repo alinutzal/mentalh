@@ -1,2 +1,6 @@
+vllm.log
 /data
-/results
+/.venv
+*.csv
+*.npy
+__pycache__/
